@@ -1,6 +1,9 @@
 #!/bin/bash
 
 card="/media/$USER/PHILIPS"
+backup_dir="$HOME/temp_dictates"
+#TODO --> export de la liste des dictées en bsename pour comparatif une fois la copie effectuée. 
+[ ! -d $backup_dir ] && mkdir $backup_dir
 
 echo $card
 
@@ -23,13 +26,16 @@ check_dictates () {
 	    echo "pas de dictée à récupérer"
     else
 	    echo "$(ls -1 ${card} | grep ".DS" | wc -l) dictées sont à transférer"
+      echo "$(ls -1 ${card}/*.DS*)"
+      sleep 1
+      return 0
     fi
 
-    echo "Des dictées ont été trouvées $(ls -1 ${card}/*.DS*)"
-    sleep 1
-    return 0
+}
 
-
+copy_dictates () {
+  echo "copie des dictées"
+  cp ${card}/*DS* $backup_dir
 }
 
 while true
@@ -37,7 +43,7 @@ do
 	sleep 1
 	if [  -d $card ]
 	then
-		check_dictates
+		check_dictates && copy_dictates
 
 	fi
 
