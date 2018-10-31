@@ -6,14 +6,20 @@ connect_window () {
 
 }
 
-backup_window () {
+backup_ask_window () {
   zenity --forms \
                   --title "Ready ?" \
                   --text "Souhaitez vous copier les dictées ? "
+
+}
+
+
+backup_run_window () {
+  
   zenity --progress \
                   --title="Backup" \
                   --text="copie des dictées en local" \
-                  --pulsate 
+                  --pulsate
 
 }
 
