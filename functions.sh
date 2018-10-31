@@ -33,7 +33,7 @@ backup_dictates () {
       echo "une erreur est survenue. les dictées n'ont pas été copiées" && error_window && exit 1
     fi
     (
-    cp ${card}/*DS* $backup_dir 2>>$logfile
+    mv ${card}/*DS* $backup_dir && sleep 3
     ) | backup_run_window
 }
 

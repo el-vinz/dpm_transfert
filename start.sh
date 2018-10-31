@@ -26,8 +26,8 @@ do
       echo ""$(date +"%d_%m_%Y %H %M") >>$logfile
   		check_dictates &&  backup_dictates
       echo -e "Les dictées :\n$(ls -1 ${card} | grep ".DS")\nont été tranférées dans le backup" >>${logfile}
-    else
-      echo "vérifiez la connectique du DPM" && error_window
+    #else
+    #  echo "vérifiez la connectique du DPM" && error_window
   	fi
 
 done
