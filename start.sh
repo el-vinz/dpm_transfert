@@ -2,14 +2,20 @@
 
 card="/media/$USER/PHILIPS"
 backup_dir="$HOME/temp_dictates"
-#TODO --> export de la liste des dictées en bsename pour comparatif une fois la copie effectuée. 
+logdir="$HOME/log_dictate"
+logfile=${logdir}/log_dict.log
+
+#TODO --> export de la liste des dictées en bsename pour comparatif une fois la copie effectuée.
 [ ! -d $backup_dir ] && mkdir $backup_dir
+[ ! -d $logdir ] && mkdir $logdir
+
+
+. ./windows.sh
 
 echo $card
 
 check_card () {
 
-    #mount -l | grep PHILIPS || return 1
     [ ! -d $card ]
     sleep 1
 
@@ -33,17 +39,20 @@ check_dictates () {
 
 }
 
-copy_dictates () {
+backup_dictates () {
   echo "copie des dictées"
+  (
   cp ${card}/*DS* $backup_dir
+  ) | backup_window
 }
 
 while true
 do
 	sleep 1
-	if [  -d $card ]
+  echo "wait"
+	if [ -d $card ]
 	then
-		check_dictates && copy_dictates
+		check_dictates && backup_dictates
 
 	fi
 
